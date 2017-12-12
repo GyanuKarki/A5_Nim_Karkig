@@ -1,0 +1,77 @@
+#Reminder app to remind for events!! Since I don't use planner and i have no remind me apps, making my own will be an
+###  ispiration #to keep##reminder for #myself#for#important events
+
+from tkinter import *
+from tkinter import ttk
+import time
+import os
+from tkinter import messagebox
+
+
+root = Tk()
+root.title("Gyanu's Reminder")
+
+
+class timer:
+
+    def __init__(self, entry1, entry2):
+        self.entry1 = entry1
+        self.entry2 = entry2
+
+    def SubmitButton(self):
+
+      RemindTime= self.entry1.get()
+      self.Message1()
+      #label2.config(text ="The remind will Ring at {} ".format(RemindTime))  #delayed in execution
+      CurrentTime = time.strftime("%H:%M")
+      print("the remind time is: {}".format(RemindTime))
+      #label2.config(text="")
+
+      while RemindTime != CurrentTime:
+        #label2.config(text ="The remind time will Ring at {} ".format(RemindTime))
+        CurrentTime = time.strftime("%H:%M")
+        time.sleep(0.1)
+
+      if RemindTime == CurrentTime:
+         print("now Reminder Musing Playing")
+         os.system("start 123.mp3")
+         label2.config(text = "Reminder music playing.....")
+         messagebox.showinfo(title= 'Remind Message', message= "{}".format(self.entry2.get()))
+
+
+    def Message1(self):
+
+        RemindTimeLable= self.entry1.get()
+        label2.config(text="the Remind time is Counting...")
+        #label2.config(text= "the remind will ring at {}".format(RemindTimeLable))
+        messagebox.showinfo(title = 'Event Reminder', message = 'You will be notified at {}'.format(RemindTimeLable))
+
+frame1 = ttk.Frame(root)
+frame1.pack()
+frame1.config(height = 1000, width = 600)
+
+label1= ttk.Label(frame1,text = "Enter the Reminder time :")
+label1.pack()
+
+
+entry1 = ttk.Entry(frame1, width = 60)
+entry1.pack()
+entry1.insert(3,"example - 19:45")
+
+labelRemindMessage= ttk.Label(frame1, text="Reminder Message:")
+labelRemindMessage.pack()
+
+entry2= ttk.Entry(frame1, width=60)
+entry2.pack()
+
+Timer = timer(entry1, entry2)
+button1= ttk.Button(frame1, text= "submit", command=Timer.SubmitButton)
+button1.pack()
+#this Label2 will show the Last Reminder Time
+label2= ttk.Label(frame1)
+label2.pack()
+
+
+#label2.config(text="hello")
+
+root.mainloop()
